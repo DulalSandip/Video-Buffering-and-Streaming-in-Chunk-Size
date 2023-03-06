@@ -4,13 +4,14 @@ const fs = require("fs")
 app.set("view engine", "ejs")
 
 app.get("/", (req, res) => {
-    res.render("video")
+    res.render("video") // it will redirect to video.ejs file inside views directory
 })
 
 
+// In video.ejs file, I had set the src location to http://localhost:4000/chunk/video, so it will hit the below api
 app.get("/chunk/video", function (req, res) {
 
-    // Ensure= there is a range given for the chunk video
+    // Ensure there is a range given for the chunk video
     const range = req.headers.range
 
     if (!range) {
@@ -25,12 +26,11 @@ app.get("/chunk/video", function (req, res) {
     // Parse Range
 
     const CHUNK_SIZE = 10 ** 6 // 1MB
-    const start = Number(range.replace(/\D/g, "")) // remove non digit /D for globally /g
-    console.log(start, "start")
+    const start = Number(range.replace(/\D/g, "")) // remove non digit value which will be removed by \D 
     const end = Math.min(start + CHUNK_SIZE, videoSize - 1)
-    console.log(end, "end")
 
-    // Create headers
+
+    // Create headers, we can see the below results through inspect elements in Network section
     const contentLength = end - start + 1
     const headers = {
         "Content-Range": `bytes ${start}-${end}/${videoSize}`,
@@ -54,3 +54,6 @@ const PORT = 4000
 app.listen(PORT, () => {
     console.log(`Server Listening on port ${PORT}`)
 })
+
+
+
