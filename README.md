@@ -12,7 +12,7 @@ https://user-images.githubusercontent.com/43705944/223190432-697bb094-682b-4ad8-
 
 Video Size loaded:
 
-![Uploading video mb.png…]()
+![video mb](https://user-images.githubusercontent.com/43705944/223195660-1b3813ae-1fe6-4152-a8d0-f41698a445fc.png)
 
 
 Headers we had added added:
