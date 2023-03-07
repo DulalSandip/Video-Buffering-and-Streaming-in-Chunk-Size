@@ -26,14 +26,14 @@ app.get("/chunk/video", function (req, res) {
     // Parse Range
 
     const CHUNK_SIZE = 10 ** 6 // 1MB
-    const start = Number(range.replace(/\D/g, "")) // remove non digit value which will be removed by \D 
-    const end = Math.min(start + CHUNK_SIZE, videoSize - 1)
+    const startARange = Number(range.replace(/\D/g, "")) // remove non digit value which will be removed by \D 
+    const endRange = Math.min(startRange + CHUNK_SIZE, videoSize - 1)
 
 
     // Create headers, we can see the below results through inspect elements in Network section
-    const contentLength = end - start + 1
+    const contentLength = endRange - startRange + 1
     const headers = {
-        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+        "Content-Range": `bytes ${startRange}-${endRange}/${videoSize}`,
         "Accept-Ranges": "bytes",
         "Content-Length": contentLength,
         "Content-Type": "video/mp4",
@@ -43,7 +43,7 @@ app.get("/chunk/video", function (req, res) {
     res.writeHead(206, headers)
 
     // create video read stream for this particular chunk
-    const videoStream = fs.createReadStream(videoPath, { start, end })
+    const videoStream = fs.createReadStream(videoPath, { startRange, endRange })
 
     // Stream the video chunk to the client
     videoStream.pipe(res)
